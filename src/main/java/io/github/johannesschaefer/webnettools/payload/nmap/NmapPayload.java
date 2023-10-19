@@ -10,7 +10,7 @@ public class NmapPayload implements Payload {
     @MainParameter(displayName ="IP / Hostname", description="nmap host")
     private String host;
 
-    @BooleanParam(displayName = "Privileged", param = "--privileged", description="Assume user has root privileges")
+    @BooleanParam(displayName = "Privileged", param = "--privileged", description="Assume user has root privileges", paramType = ParameterType.ONLY_PARAM)
     private Boolean privileged;
 
     @BooleanParam(displayName ="OS detection", param="-O", description="Enable OS detection")
