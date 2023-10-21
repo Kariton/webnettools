@@ -35,6 +35,7 @@
             TaskStatus.PREPARED,
             new Date()
         );
+        remove()
         dispatch("repeat", newResult);
     }
 
@@ -180,7 +181,7 @@
             >
                 <i class="bi bi-arrow-repeat" style="font-size: 1.3em" />
             </button>
-            <button class="btn" on:click={downloadText} title="Download">
+            <button class="btn" on:click|stopPropagation={downloadText} title="Download">
                 <i class="bi bi-download" style="font-size: 1.3em" />
             </button>
             <button

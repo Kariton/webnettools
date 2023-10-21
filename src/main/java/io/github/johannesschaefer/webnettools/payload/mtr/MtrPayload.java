@@ -19,6 +19,7 @@ public class MtrPayload implements Payload {
 
     @MainParameter(displayName = "Hostname or IP address", description = "Specify a hostname or an IP address.")
     private String hostname;
+
     @FixedParam(param = "--report-wide", paramType = ParameterType.ONLY_PARAM)
     private Boolean report = true;
 

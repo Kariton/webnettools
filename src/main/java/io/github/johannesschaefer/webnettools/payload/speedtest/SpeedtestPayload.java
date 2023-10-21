@@ -26,7 +26,7 @@ import lombok.Data;
         "please see our Privacy Policy at:</br>" +
         "</br>" +
         "<a href=\"http://www.speedtest.net/privacy\">Privacy</a>")
-public class Speedtest implements Payload {
+public class SpeedtestPayload implements Payload {
     @FixedParam(param = "--progress", paramType = ParameterType.EQUALS)
     private String privileged = "no";
 
