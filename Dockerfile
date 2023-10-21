@@ -4,47 +4,93 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 ARG SPEEDTEST_VERSION="1.2.0"
 
-ADD . /root/webnet-tools/
-
 RUN apt-get update \
+        && apt-get -yu dist-upgrade -y \
         && apt-get -yq install \
                 maven \
                 wget  \
-                git \
-        && cd /root/webnet-tools \
-        && mvn clean package
+                git
 
-RUN cd /root \
-        && wget https://install.speedtest.net/app/cli/ookla-speedtest-${SPEEDTEST_VERSION}-linux-$(uname -m).tgz \
-        && tar xvf *.tgz
+ADD . /root/webnettools/
 
-RUN cd /root \
-        && git clone --depth 1 https://github.com/drwetter/testssl.sh
+WORKDIR /root/webnettools/
 
+RUN mvn clean package
 
-FROM openjdk:22-jdk-slim-bullseye
-
-RUN apt-get update \
-        && apt-get -yq install \
-		        dumb-init \
-				procps \
-		        bsdmainutils \
-				iputils-ping \
-                traceroute \
-                mtr \
-                dnsutils \
-                nmap \
-        && apt-get clean
-
-COPY --from=builder /root/webnet-tools/target/*-runner.jar /app/app.jar
-COPY --from=builder /root/webnet-tools/target/lib/* /app/lib/
-COPY --from=builder /root/testssl.sh /app/testssl.sh
-COPY --from=builder /root/speedtest /usr/local/bin/
 
 WORKDIR /root
 
-ENV PATH /app/testssl.sh/:$PATH
-ENV AVAILABLE_TOOLS testssl,ping,traceroute,nmap,dig,mtr,speedtest
+RUN wget https://install.speedtest.net/app/cli/ookla-speedtest-${SPEEDTEST_VERSION}-linux-$(uname -m).tgz \
+        && tar xvf ookla-speedtest-*.tgz
+
+RUN git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+
+RUN git clone https://github.com/skavngr/rapidscan.git
+
+
+FROM kalilinux/kali-last-release
+
+RUN apt-get update \
+        && apt-get -yu dist-upgrade -y \
+        && apt-get -yq install \
+		        dumb-init \
+                traceroute \
+                mtr \
+                nmap
+
+# for testssl.sh
+RUN apt-get -yq install \
+        openjdk-22-jre-headless \
+		procps \
+		bsdmainutils \
+		iputils-ping \
+        dnsutils
+
+# for rapidscan
+# 'golismero' install has been skipped. 
+# See issue https://github.com/golismero/golismero/issues/59
+RUN apt-get -yq install \
+        python3 \
+        host \
+        whois \
+        sslyze \
+        wapiti \
+        nmap \
+        dmitry \
+        dnsenum \
+        dnsmap \
+        dnsrecon \
+        dnswalk \
+        dirb \
+        wafw00f \
+        whatweb \
+        nikto \
+        lbd \
+        xsser \
+        fierce \
+        theharvester \
+        davtest \
+        uniscan \
+        amass \
+        wget
+
+RUN apt-get -yq autoremove \
+        && apt-get clean \
+		&& rm -rf /var/lib/{apt,dpkg,cache,log}
+
+COPY --from=builder /root/webnettools/target/*-runner.jar /app/app.jar
+COPY --from=builder /root/webnettools/target/lib/* /app/lib/
+
+COPY --from=builder /root/testssl.sh /usr/local/bin/testssl.sh
+RUN ln -s /usr/local/bin/testssl.sh/testssl.sh /usr/local/bin/testssl
+
+COPY --from=builder /root/speedtest /usr/local/bin/
+
+COPY --from=builder /root/rapidscan/rapidscan.py /usr/local/bin/rapidscan
+
+WORKDIR /root
+
+ENV AVAILABLE_TOOLS testssl,ping,traceroute,nmap,dig,mtr,speedtest,rapidscan
 ENV CA_DIR /certs
 ENV PORT 8080
 
