@@ -21,6 +21,8 @@ public class TestSSLPayload implements Payload {
 
     @FixedParam(param = "--warnings")
     private String warnings = "batch";
+    @FixedParam(param = "--wide")
+    private String wide;
 
     // General Options
     @EnumParam(displayName = "Mode", param = "--mode", description = "Mass testing to be done serial (default) or parallel", group = TestSSLPayload.GROUP_GENERAL)
@@ -139,9 +141,7 @@ public class TestSSLPayload implements Payload {
     private Boolean hints = true;
     @BooleanParam(displayName ="Quiet", param="--quiet", group = TestSSLPayload.GROUP_OUTPUT, description="Normally testssl.sh displays a banner on stdout with several version information, usage rights and a warning. This option suppresses it. Please note that by choosing this option you acknowledge usage terms and the warning normally appearing in the banner.")
     private Boolean quiet;
-    @BooleanParam(displayName ="wide", param="--wide", group = TestSSLPayload.GROUP_OUTPUT, description="wide output for tests like RC4, BEAST. FS also with hexcode, kx, strength, RFC name")
-    private Boolean wide;
-    @BooleanParam(displayName ="show-each", param="--show-each", group = TestSSLPayload.GROUP_OUTPUT, description="for wide outputs: display all ciphers tested -- not only succeeded ones")
+    @BooleanParam(displayName ="show-each", param="--show-each", group = TestSSLPayload.GROUP_OUTPUT, description="display all ciphers tested -- not only succeeded ones")
     private Boolean showEach;
     @EnumParam(displayName = "mapping", param = "--mapping", group = TestSSLPayload.GROUP_OUTPUT, description = "openssl: use the OpenSSL cipher suite name as the primary name cipher suite name form (default)\n-> use the IANA/(RFC) cipher suite name as the primary name cipher suite name form\n-> don't display the OpenSSL cipher suite name, display IANA/(RFC) names only\n-> don't display the IANA/(RFC) cipher suite name, display OpenSSL names only")
     private Mapping mapping;
