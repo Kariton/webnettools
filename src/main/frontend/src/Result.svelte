@@ -15,7 +15,7 @@
     let statusVisible: boolean = true;
 
     let displayText = "";
-    let displayTextFormated = "";
+    let displayTextFormatted = "";
     let textarea;
     const ansi_up = new AnsiUp();
     const controller = new AbortController();
@@ -38,6 +38,21 @@
         dispatch("repeat", newResult);
     }
 
+    function downloadText() {
+        const textToDownload = displayTextFormatted;
+        const filename = result.displayText.toLowerCase().replace(/ /g, '_') + '_' + moment(result.date).format("YYYYMMDDHHMMSS") + '.txt';
+        const blob = new Blob([textToDownload], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const text = document.createElement('a');
+        text.style.display = 'none';
+        text.href = url;
+        text.download = filename;
+        document.body.appendChild(text);
+        text.click();
+        window.URL.revokeObjectURL(url);
+    }
+
     function remove() {
         cancelRequest();
         dispatch("remove", result);
@@ -51,7 +66,7 @@
     onMount(async () => {
         result.status = TaskStatus.PREPARED;
         displayText = "";
-        displayTextFormated = "";
+        displayTextFormatted = "";
         try {
             const response = await fetch("__URL__" + "tools/" + result.url, {
                 method: "POST",
@@ -70,7 +85,7 @@
                     const { value, done } = await reader.read();
                     if (done) break;
                     displayText += new TextDecoder("utf-8").decode(value);
-                    displayTextFormated = ansi_up.ansi_to_html(displayText);
+                    displayTextFormatted = ansi_up.ansi_to_html(displayText);
                     scrollToEnd();
                 }
             }
@@ -81,13 +96,13 @@
                 if (div.innerHTML === "") {
                     div.innerHTML = response.status + " " + response.statusText;
                 }
-                displayTextFormated = div.textContent || div.innerText || "";
+                displayTextFormatted = div.textContent || div.innerText || "";
             } else {
                 result.status = TaskStatus.SUCCESS;
             }
         } catch (e) {
             result.status = TaskStatus.ERROR;
-            displayTextFormated += "\n" + e;
+            displayTextFormatted += "\n" + e;
         } finally {
         }
     });
@@ -165,6 +180,9 @@
             >
                 <i class="bi bi-arrow-repeat" style="font-size: 1.3em" />
             </button>
+            <button class="btn" on:click={downloadText} title="Download">
+                <i class="bi bi-download" style="font-size: 1.3em" />
+            </button>
             <button
                 class="btn"
                 on:click|stopPropagation={remove}
@@ -188,7 +206,7 @@
                 <pre
                     class="overflow-scroll-gradient"
                     bind:this={textarea}>
-                {@html displayTextFormated}
+                {@html displayTextFormatted}
                 </pre>
             </div>
         </div>
