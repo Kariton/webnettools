@@ -135,6 +135,8 @@ public class TestSSLPayload implements Payload {
     private String addCaFile;
 
     // Output options
+    @BooleanParam(displayName ="hints", param="--hints", group = TestSSLPayload.GROUP_OUTPUT, description="additional hints to findings")
+    private Boolean hints = true;
     @BooleanParam(displayName ="Quiet", param="--quiet", group = TestSSLPayload.GROUP_OUTPUT, description="Normally testssl.sh displays a banner on stdout with several version information, usage rights and a warning. This option suppresses it. Please note that by choosing this option you acknowledge usage terms and the warning normally appearing in the banner.")
     private Boolean quiet;
     @BooleanParam(displayName ="wide", param="--wide", group = TestSSLPayload.GROUP_OUTPUT, description="wide output for tests like RC4, BEAST. FS also with hexcode, kx, strength, RFC name")
@@ -149,8 +151,6 @@ public class TestSSLPayload implements Payload {
     private Boolean colorblind;
     @BooleanParam(displayName ="disable-rating", param="--disable-rating", group = TestSSLPayload.GROUP_OUTPUT, description="Explicitly disables the rating output")
     private Boolean disableRating;
-    @BooleanParam(displayName ="hints", param="--hints", group = TestSSLPayload.GROUP_OUTPUT, description="additional hints to findings")
-    private Boolean hints;
 
     @Override
     public String getCacheString() {
