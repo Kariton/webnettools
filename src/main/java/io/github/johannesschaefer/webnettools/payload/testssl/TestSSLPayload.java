@@ -19,6 +19,8 @@ public class TestSSLPayload implements Payload {
     @MainParameter(displayName ="URL / Hostname", description="URI can be a hostname, an IPv4 or IPv6 address (restriction see below) or an URL. IPv6 addresses need to be in square brackets. For any given parameter port 443 is assumed unless specified by appending a colon and a port number. The only preceding protocol specifier allowed is https. You need to be aware that checks for an IP address might not hit the vhost you want. DNS resolution (A/AAAA record) is being performed unless you have an /etc/hosts entry for the hostname.")
     private String url;
 
+    @FixedParam(param = "--openssl")
+    private String openssl = "/usr/bin/openssl";
     @FixedParam(param = "--warnings")
     private String warnings = "batch";
     @FixedParam(param = "--wide")
