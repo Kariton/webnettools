@@ -5,7 +5,7 @@ import io.github.johannesschaefer.webnettools.payload.Payload;
 import lombok.Data;
 
 @Data
-@Tool(name = "ping", displayName = "Ping", cmd = "ping", description = "Standard Linux Ping tooling.")
+@Tool(name = "ping", displayName = "ping", cmd = "ping", description = "Standard Linux Ping tooling.")
 @Group(name = PingPayload.GROUP_GENERAL)
 @Group(name = PingPayload.GROUP_ADDITIONAL)
 @Group(name = PingPayload.GROUP_ADVANCED)

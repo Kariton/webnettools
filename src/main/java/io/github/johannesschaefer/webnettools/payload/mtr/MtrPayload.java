@@ -5,7 +5,7 @@ import io.github.johannesschaefer.webnettools.payload.Payload;
 import lombok.Data;
 
 @Data
-@Tool(name = "mtr", displayName = "MTR", cmd = "mtr", description = "Network diagnostic tool combining traceroute and ping")
+@Tool(name = "mtr", displayName = "mtr", cmd = "mtr", description = "Network diagnostic tool combining traceroute and ping")
 @Group(name = MtrPayload.GROUP_GENERAL)
 @Group(name = MtrPayload.GROUP_ADDITIONAL)
 @Group(name = MtrPayload.GROUP_ADVANCED)

@@ -5,7 +5,7 @@ import io.github.johannesschaefer.webnettools.payload.Payload;
 import lombok.Data;
 
 @Data
-@Tool(name="traceroute", displayName="Traceroute", cmd="traceroute", description="Network diagnostic command for displaying possible routes (paths) and measuring transit delays of packets across an Internet Protocol (IP) network.")
+@Tool(name="traceroute", displayName="traceroute", cmd="traceroute", description="Network diagnostic command for displaying possible routes (paths) and measuring transit delays of packets across an Internet Protocol (IP) network.")
 @Group(name = TraceroutePayload.GROUP_GENERAL)
 @Group(name = TraceroutePayload.GROUP_ADDITIONAL)
 @Group(name = TraceroutePayload.GROUP_ADVANCED)

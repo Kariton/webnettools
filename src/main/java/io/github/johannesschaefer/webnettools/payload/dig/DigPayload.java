@@ -5,7 +5,7 @@ import io.github.johannesschaefer.webnettools.payload.Payload;
 import lombok.Data;
 
 @Data
-@Tool(name = "dig", displayName = "Dig", cmd = "dig", description = "DNS lookup utility")
+@Tool(name = "dig", displayName = "dig", cmd = "dig", description = "DNS lookup utility")
 @Group(name = DigPayload.GROUP_GENERAL)
 @Group(name = DigPayload.GROUP_ADDITIONAL)
 @Group(name = DigPayload.QUERY_OPTIONS)
