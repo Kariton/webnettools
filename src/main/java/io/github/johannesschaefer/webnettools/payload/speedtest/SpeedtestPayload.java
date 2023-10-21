@@ -7,23 +7,25 @@ import lombok.Data;
 @Data
 
 @Tool(name="speedtest", displayName="Speedtest", cmd="speedtest", description="<a href=\"https://www.speedtest.net/apps/cli\">Speedtest</a> by Ookla is the official command line client for testing the speed and performance of your internet connection.</br></br>You may only use this Speedtest software and information generated " +
-        "from it for personal, non-commercial use, through a command line " +
-        "interface on a personal computer. Your use of this software is subject " +
-        "to the End User License Agreement, Terms of Use and Privacy Policy at " +
-        "these URLs:</br>" +
+        "from it for personal, non-commercial use, through a command line interface on a personal computer." +
+        "</br>" +
+        "Your use of this software is subject to the End User License Agreement, Terms of Use and Privacy Policy at these URLs:" +
         "</br>" +
         "<a href=\"https://www.speedtest.net/about/eula\">EULA</a></br>" +
         "<a href=\"https://www.speedtest.net/about/terms\">Terms</a></br>" +
         "<a href=\"https://www.speedtest.net/about/privacy\">Privacy</a></br>" +
         "</br>" +
         "Ookla collects certain data through Speedtest that may be considered" +
-        "personally identifiable, such as your IP address, unique device" +
-        "identifiers or location. Ookla believes it has a legitimate interest" +
+        "personally identifiable, such as your IP address, unique device identifiers or location." +
+        "</br>" +
+        "Ookla believes it has a legitimate interest" +
         "to share this data with internet providers, hardware manufacturers and" +
         "industry regulators to help them understand and create a better and" +
-        "faster internet. For further information including how the data may be" +
-        "shared, where the data may be transferred and Ookla's contact details," +
-        "please see our Privacy Policy at:</br>" +
+        "faster internet." +
+        "</br>" + 
+        "For further information including how the data may be shared," +
+        "where the data may be transferred and Ookla's contact details," +
+        "please see our Privacy Policy at:" +
         "</br>" +
         "<a href=\"http://www.speedtest.net/privacy\">Privacy</a>")
 public class SpeedtestPayload implements Payload {

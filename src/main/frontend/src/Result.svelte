@@ -40,12 +40,13 @@
     }
 
     function downloadText() {
-        const textToDownload = displayTextFormatted;
+        const textToDownload = displayText.replace(/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[m,K,H,f,F,J]/g, ""); // Remove color escape codes
         const filename = result.displayText.toLowerCase().replace(/ /g, '_') + '_' + moment(result.date).format("YYYYMMDDHHMMSS") + '.txt';
-        const blob = new Blob([textToDownload], { type: 'text/plain' });
+        const blob = new Blob([textToDownload], { type: 'text/plain;charset=utf-8' });
+    
         const url = URL.createObjectURL(blob);
-
         const text = document.createElement('a');
+
         text.style.display = 'none';
         text.href = url;
         text.download = filename;

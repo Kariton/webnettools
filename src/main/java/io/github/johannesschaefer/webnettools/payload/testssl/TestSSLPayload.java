@@ -5,7 +5,7 @@ import io.github.johannesschaefer.webnettools.payload.Payload;
 import lombok.Data;
 
 @Data
-@Tool(name="testssl", displayName="TestSSL", cmd="testssl", description="Check the support of SSL/TLS of any server. Uses the <a href=\"https://testssl.sh\">testssl.sh</a> tooling.")
+@Tool(name="testssl", displayName="TestSSL", cmd="testssl", description="Check the support of SSL/TLS of any server. Uses the <a href=\"https://github.com/drwetter/testssl.sh\">drwetter/testssl.sh</a> tooling.")
 @Group(name=TestSSLPayload.GROUP_GENERAL)
 @Group(name=TestSSLPayload.GROUP_CHECKS, description= "By default, testssl.sh run everything, except cipher-per-proto and grease")
 @Group(name=TestSSLPayload.GROUP_TUNING)
