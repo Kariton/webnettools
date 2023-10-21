@@ -9,13 +9,13 @@ import lombok.Data;
 @Group(name = MtrPayload.GROUP_GENERAL)
 @Group(name = MtrPayload.GROUP_ADDITIONAL)
 @Group(name = MtrPayload.GROUP_ADVANCED)
-@Group(name = MtrPayload.OUTPUT_FORMAT)
+@Group(name = MtrPayload.GROUP_FORMAT)
 public class MtrPayload implements Payload {
 
     public static final String GROUP_GENERAL = "General options";
     public static final String GROUP_ADDITIONAL = "Additional options";
     public static final String GROUP_ADVANCED = "Advanced options";
-    public static final String OUTPUT_FORMAT = "Output format";
+    public static final String GROUP_FORMAT = "Output format";
 
     @MainParameter(displayName = "Hostname or IP address", description = "Specify a hostname or an IP address.")
     private String hostname;
@@ -25,25 +25,27 @@ public class MtrPayload implements Payload {
     // General Options
     @NumberParam(displayName = "Pings", param = "--report-cycles", min = 1., max = 1000., step = 1., description = "Set the number of pings sent.", group = MtrPayload.GROUP_GENERAL)
     private Integer pings = 10;
-    @BooleanParam(displayName = "Use TCP", param = "--tcp", paramType = ParameterType.ONLY_PARAM, description = "Ping over TCP instead of ICMP.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_GENERAL)
+    @BooleanParam(displayName = "Use TCP", param = "--tcp", paramType = ParameterType.ONLY_PARAM, description = "Ping over TCP instead of ICMP.", group = MtrPayload.GROUP_GENERAL)
     private Boolean useTcp;
-    @BooleanParam(displayName = "Use UDP", param = "--udp", paramType = ParameterType.ONLY_PARAM, description = "Ping over UDP instead of ICMP.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_GENERAL)
+    @BooleanParam(displayName = "Use UDP", param = "--udp", paramType = ParameterType.ONLY_PARAM, description = "Ping over UDP instead of ICMP.", group = MtrPayload.GROUP_GENERAL)
     private Boolean useUdp;
     @NumberParam(displayName = "Target port", param = "--port", min = 1., max = 65536., step = 1., description = "Target port number for TCP, SCTP, or UDP.", group = MtrPayload.GROUP_GENERAL)
     private Integer port;
-    @BooleanParam(displayName = "No DNS", param = "--no-dns", paramType = ParameterType.ONLY_PARAM, description = "Do not resolve host names.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_GENERAL)
+    @BooleanParam(displayName = "No DNS", param = "--no-dns", paramType = ParameterType.ONLY_PARAM, description = "Do not resolve host names.", group = MtrPayload.GROUP_GENERAL)
     private Boolean noDns;
-    @BooleanParam(displayName = "Show IPs", param = "--show-ips", paramType = ParameterType.ONLY_PARAM, description = "Show IP addresses in addition to host names.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_GENERAL)
+    @BooleanParam(displayName = "Show IPs", param = "--show-ips", paramType = ParameterType.ONLY_PARAM, description = "Show IP addresses in addition to host names.", group = MtrPayload.GROUP_GENERAL)
     private Boolean showIps;
 
     // Additional Options
-    @BooleanParam(displayName = "Use MPLS", param = "--mpls", paramType = ParameterType.ONLY_PARAM, description = "Display information from ICMP extensions for MPLS (RFC 4950) that are encoded in the response packets.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_ADDITIONAL)
+    @FileParam(displayName = "Upload File", param = "--filename", description = "Reads the list of hostnames or IPs from the specified file.", group = MtrPayload.GROUP_ADDITIONAL)
+    private String filename;
+    @BooleanParam(displayName = "Use MPLS", param = "--mpls", paramType = ParameterType.ONLY_PARAM, description = "Display information from ICMP extensions for MPLS (RFC 4950) that are encoded in the response packets.", group = MtrPayload.GROUP_ADDITIONAL)
     private Boolean useMpls;
-    @BooleanParam(displayName = "Use SCTP", param = "--sctp", paramType = ParameterType.ONLY_PARAM, description = "Use Stream Control Transmission Protocol packets instead of ICMP ECHO.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_ADDITIONAL)
+    @BooleanParam(displayName = "Use SCTP", param = "--sctp", paramType = ParameterType.ONLY_PARAM, description = "Use Stream Control Transmission Protocol packets instead of ICMP ECHO.", group = MtrPayload.GROUP_ADDITIONAL)
     private Boolean useSctp;
-    @BooleanParam(displayName = "IPv4 only", param = "-4", description = "Use IPv4 only", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_ADDITIONAL)
+    @BooleanParam(displayName = "IPv4 only", param = "-4", description = "Use IPv4 only", group = MtrPayload.GROUP_ADDITIONAL)
     private Boolean v4;
-    @BooleanParam(displayName = "IPv6 only", param = "-6", description = "Use IPv6 only. (IPv4 may be used for DNS lookups.)", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.GROUP_ADDITIONAL)
+    @BooleanParam(displayName = "IPv6 only", param = "-6", description = "Use IPv6 only. (IPv4 may be used for DNS lookups.)", group = MtrPayload.GROUP_ADDITIONAL)
     private Boolean v6;
     @NumberParam(displayName = "Timeout", param = "--timeout", min = 1., max = 600., step = 1., description = "The number of seconds to keep probe sockets open before giving up on the connection. Using large values for this, especially combined with a short interval, will use up a lot of file descriptors.", group = MtrPayload.GROUP_ADDITIONAL)
     private Integer timeout;
@@ -69,17 +71,17 @@ public class MtrPayload implements Payload {
     private Integer bitpattern;
 
     // Output Format
-    @EnumParam(displayName = "Display AS Info", param = "--ipinfo", paramType = ParameterType.ONLY_PARAM, description = "Displays information about each IP hop. 0: AS Number,  1: IP prefix,  2: Country code of the origin AS, 3: RIR (ripencc, arin, ...), 4: Allocation date of the IP prefix.", group = MtrPayload.OUTPUT_FORMAT)
+    @EnumParam(displayName = "Display AS Info", param = "--ipinfo", paramType = ParameterType.ONLY_PARAM, description = "Displays information about each IP hop. 0: AS Number,  1: IP prefix,  2: Country code of the origin AS, 3: RIR (ripencc, arin, ...), 4: Allocation date of the IP prefix.", group = MtrPayload.GROUP_FORMAT)
     private MtrIpinfo displayAsInfo;
-    @BooleanParam(displayName = "Raw Output", param = "--raw", paramType = ParameterType.ONLY_PARAM, description = "Use the raw output format. This format is better suited for archival of the measurement results.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.OUTPUT_FORMAT)
+    @BooleanParam(displayName = "Raw Output", param = "--raw", paramType = ParameterType.ONLY_PARAM, description = "Use the raw output format. This format is better suited for archival of the measurement results.", group = MtrPayload.GROUP_FORMAT)
     private Boolean rawOutput;
-    @BooleanParam(displayName = "CSV Output", param = "--csv", paramType = ParameterType.ONLY_PARAM, description = "Use the Comma-Separated-Value (CSV) output format.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.OUTPUT_FORMAT)
+    @BooleanParam(displayName = "CSV Output", param = "--csv", paramType = ParameterType.ONLY_PARAM, description = "Use the Comma-Separated-Value (CSV) output format.", group = MtrPayload.GROUP_FORMAT)
     private Boolean csvOutput;
-    @BooleanParam(displayName = "JSON Output", param = "--json", paramType = ParameterType.ONLY_PARAM, description = "Use the JSON output format. This format is better suited for automated processing of the measurement results.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.OUTPUT_FORMAT)
+    @BooleanParam(displayName = "JSON Output", param = "--json", paramType = ParameterType.ONLY_PARAM, description = "Use the JSON output format. This format is better suited for automated processing of the measurement results.", group = MtrPayload.GROUP_FORMAT)
     private Boolean jsonOutput;
-    @BooleanParam(displayName = "XML Output", param = "--xml", paramType = ParameterType.ONLY_PARAM, description = "Use this option to tell mtr to use the xml output format. This format is better suited for automated processing of the measurement results.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.OUTPUT_FORMAT)
+    @BooleanParam(displayName = "XML Output", param = "--xml", paramType = ParameterType.ONLY_PARAM, description = "Use this option to tell mtr to use the xml output format. This format is better suited for automated processing of the measurement results.", group = MtrPayload.GROUP_FORMAT)
     private Boolean xmlOutput;
-    @BooleanParam(displayName = "Split Output", param = "--split", paramType = ParameterType.ONLY_PARAM, description = "Set mtr to spit out a format that is suitable for a split-user interface.", labelFalse = "No", labelTrue = "Yes", group = MtrPayload.OUTPUT_FORMAT)
+    @BooleanParam(displayName = "Split Output", param = "--split", paramType = ParameterType.ONLY_PARAM, description = "Set mtr to spit out a format that is suitable for a split-user interface.", group = MtrPayload.GROUP_FORMAT)
     private Boolean splitOutput;
 
     @Override

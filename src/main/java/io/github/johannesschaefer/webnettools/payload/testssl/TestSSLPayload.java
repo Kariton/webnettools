@@ -22,6 +22,7 @@ public class TestSSLPayload implements Payload {
     @FixedParam(param = "--warnings")
     private String warnings = "batch";
 
+    // General Options
     @EnumParam(displayName = "Mode", param = "--mode", description = "Mass testing to be done serial (default) or parallel", group = TestSSLPayload.GROUP_GENERAL)
     private TestSSLMode mode = TestSSLMode.SERIAL;
     @EnumParam(displayName = "Start TLS", param = "--starttls", description = "Does a run against a STARTTLS enabled service which is one of ftp, smtp, lmtp, pop3, imap, xmpp, xmpp-server, telnet, ldap, nntp, postgres, mysql", group = TestSSLPayload.GROUP_GENERAL)
@@ -34,12 +35,15 @@ public class TestSSLPayload implements Payload {
     private Integer connectTimeout;
     @NumberParam(displayName = "Openssl Timeout", param = "--openssl-timeout", description = "useful to avoid hangers. Max <seconds> to wait before openssl connect will be terminated", min = 0, max = 1000, group = TestSSLPayload.GROUP_GENERAL)
     private Integer opensslTimeout;
+    @FileParam(displayName = "Upload File", param = "--file", description = "Reads the list of hostnames from the specified file.", group = TestSSLPayload.GROUP_GENERAL)
+    private String filename;
 
+    // Single checks
     @BooleanParam(displayName ="Each Cipher", param="--each-cipher", group = TestSSLPayload.GROUP_CHECKS, description="checks each local cipher remotely")
     private Boolean eachCipher;
     @BooleanParam(displayName ="Cipher per Proto", param="--cipher-per-proto", group = TestSSLPayload.GROUP_CHECKS, description="checks those per protocol")
     private Boolean cipherPerProto;
-    @BooleanParam(displayName ="Standard", param="--standard", group = TestSSLPayload.GROUP_CHECKS, description="tests certain lists of cipher suites by strength")
+    @BooleanParam(displayName ="Standard", param="--categories", group = TestSSLPayload.GROUP_CHECKS, description="tests certain lists of cipher suites by strength")
     private Boolean standard;
     @BooleanParam(displayName ="Forward security", param="--fs", group = TestSSLPayload.GROUP_CHECKS, description="checks forward secrecy settings")
     private Boolean fs;
@@ -96,8 +100,7 @@ public class TestSSLPayload implements Payload {
     @BooleanParam(displayName = "rc4", param = "--rc4", group = TestSSLPayload.GROUP_CHECKS, description = "which RC4 ciphers are being offered?")
     private Boolean rc4;
 
-    @BooleanParam(displayName = "fast", param = "--fast", group = TestSSLPayload.GROUP_TUNING, description = "omits some checks: using openssl for all ciphers (-e), show only first preferred cipher.")
-    private Boolean fast;
+    // Tuning / connect options
     @BooleanParam(displayName = "full", param = "--full", group = TestSSLPayload.GROUP_TUNING, description = "includes tests for implementation bugs and cipher per protocol (could disappear)")
     private Boolean full;
     @BooleanParam(displayName = "bugs", param = "--bugs", group = TestSSLPayload.GROUP_TUNING, description = "enables the \"-bugs\" option of s_client, needed e.g. for some buggy F5s")
@@ -131,6 +134,7 @@ public class TestSSLPayload implements Payload {
     @FileParam(displayName = "CA file", param = "--add-ca", accept = "*.pem", group = TestSSLPayload.GROUP_TUNING, description = "CA files enables test against additional CAs" )
     private String addCaFile;
 
+    // Output options
     @BooleanParam(displayName ="Quiet", param="--quiet", group = TestSSLPayload.GROUP_OUTPUT, description="Normally testssl.sh displays a banner on stdout with several version information, usage rights and a warning. This option suppresses it. Please note that by choosing this option you acknowledge usage terms and the warning normally appearing in the banner.")
     private Boolean quiet;
     @BooleanParam(displayName ="wide", param="--wide", group = TestSSLPayload.GROUP_OUTPUT, description="wide output for tests like RC4, BEAST. FS also with hexcode, kx, strength, RFC name")
@@ -145,6 +149,8 @@ public class TestSSLPayload implements Payload {
     private Boolean colorblind;
     @BooleanParam(displayName ="disable-rating", param="--disable-rating", group = TestSSLPayload.GROUP_OUTPUT, description="Explicitly disables the rating output")
     private Boolean disableRating;
+    @BooleanParam(displayName ="hints", param="--hints", group = TestSSLPayload.GROUP_OUTPUT, description="additional hints to findings")
+    private Boolean hints;
 
     @Override
     public String getCacheString() {

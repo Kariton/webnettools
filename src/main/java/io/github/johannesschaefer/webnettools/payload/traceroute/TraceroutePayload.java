@@ -20,17 +20,17 @@ public class TraceroutePayload implements Payload {
 
     // General Options
     @BooleanParam(displayName = "Use IPv4", param = "-4", description = "Use IPv4", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean useIPv4;
+    private Boolean useIPv4;
     @BooleanParam(displayName = "Use IPv6", param = "-6", description = "Use IPv6", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean useIPv6;
+    private Boolean useIPv6;
     @BooleanParam(displayName = "Do Not Resolve IP Addresses", param = "-n", description = "Do not resolve IP addresses to their domain names", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean doNotResolveIP;
+    private Boolean doNotResolveIP;
     @BooleanParam(displayName = "Do Not Fragment Packets", param = "-F", description = "Do not fragment packets", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean doNotFragment;
+    private Boolean doNotFragment;
     @BooleanParam(displayName = "Use ICMP ECHO", param = "-I", description = "Use ICMP ECHO for tracerouting", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean useIcmpEcho;
+    private Boolean useIcmpEcho;
     @BooleanParam(displayName = "Use TCP SYN", param = "-T", description = "Use TCP SYN for tracerouting (default port is 80)", group = TraceroutePayload.GROUP_GENERAL)
-    private boolean useTcpSyn;
+    private Boolean useTcpSyn;
     @BooleanParam(displayName = "Use UDP", param = "-U", description = "Use UDP to particular port for tracerouting (instead of increasing the port per each probe), default port is 53", group = TraceroutePayload.GROUP_GENERAL)
     private Boolean useUdp;
     @BooleanParam(displayName = "Use UDPLITE", param = "-UL", description = "Use UDPLITE for tracerouting (default dest port is 53)", group = TraceroutePayload.GROUP_GENERAL)
@@ -41,30 +41,30 @@ public class TraceroutePayload implements Payload {
     // Additional Options
     @StringParam(displayName = "Protocol", param = "-P", description = "Use raw packet of protocol prot for tracerouting", group = TraceroutePayload.GROUP_ADDITIONAL)
     private String proto;
-    @BooleanParam(displayName = "Discover MTU", param = "--mtu", description = "Discover MTU along the path being traced. Implies `-F -N 1'", group = TraceroutePayload.GROUP_ADDITIONAL)
+    @BooleanParam(displayName = "Discover MTU", param = "--mtu", description = "Discover MTU along the path being traced.", group = TraceroutePayload.GROUP_ADDITIONAL)
     private Boolean discoverMTU;
-    @StringParam(displayName = "Start from TTL", param = "-f", description = "Start from the first_ttl hop (instead from 1)", group = TraceroutePayload.GROUP_ADDITIONAL)
-    private String startTTL;
-    @StringParam(displayName = "Max TTL", param = "-m", description = "Set the max number of hops (max TTL to be reached). Default is 30", group = TraceroutePayload.GROUP_ADDITIONAL)
-    private String maxTTL;
-    @StringParam(displayName = "Simultaneous Queries", param = "-N", description = "Set the number of probes to be tried simultaneously (default is 16)", group = TraceroutePayload.GROUP_ADDITIONAL)
-    private String simultaneousQueries;
-    @StringParam(displayName = "Destination Port", param = "-p", description = "Set the destination port to use. It is either initial udp port value for \"default\" method (incremented by each probe, default is 33434), or initial seq for \"icmp\" (incremented as well, default from 1), or some constant destination port for other methods (with default of 80 for \"tcp\", 53 for \"udp\", etc.)", group = TraceroutePayload.GROUP_ADDITIONAL)
-    private String destinationPort;
+    @NumberParam(displayName = "Start from TTL", param = "-f", min = 1., max = 65536., step = 1., description = "Start from the first_ttl hop (instead from 1)", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Integer startTTL;
+    @NumberParam(displayName = "Max TTL", param = "-m", min = 1., max = 65536., step = 1., description = "Set the max number of hops (max TTL to be reached). Default is 30", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Integer maxTTL;
+    @NumberParam(displayName = "Simultaneous Queries", param = "-N", min = 1., max = 65536., step = 1., description = "Set the number of probes to be tried simultaneously (default is 16)", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Integer simultaneousQueries;
+    @NumberParam(displayName = "Source Port", param = "--sport", min = 1., max = 65536., step = 1., description = "Use source port num for outgoing packets.", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Integer sourcePort;
+    @NumberParam(displayName = "Destination Port", param = "-p", min = 1., max = 65536., step = 1., description = "Set the destination port to use. It is either initial udp port value for \"default\" method (incremented by each probe, default is 33434), or initial seq for \"icmp\" (incremented as well, default from 1), or some constant destination port for other methods (with default of 80 for \"tcp\", 53 for \"udp\", etc.)", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Integer destinationPort;
     @NumberParam(displayName = "Minimal Send Wait Interval", param = "-z", min = 1., max = 10000., step = 0.1, description = "Minimal time interval between probes (default 0). If the value is more than 10, then it specifies a number in milliseconds, else it is a number of seconds (float point values allowed too)", group = TraceroutePayload.GROUP_ADDITIONAL)
     private Float minimalSend;
+    @NumberParam(displayName = "Wait Times", param = "-w", min = 1., max = 65536., step = 0.1, description = "Wait for a probe no more than HERE (default 3) times longer than a response from the same hop, or no more than NEAR (default 10) times than some next hop, or MAX (default 5.0) seconds (float point values allowed too)", group = TraceroutePayload.GROUP_ADDITIONAL)
+    private Float waitTimes;
 
     // Advanced Options
-    @StringParam(displayName = "Source Port", param = "--sport", description = "Use source port num for outgoing packets. Implies `-N 1'", group = TraceroutePayload.GROUP_ADVANCED)
-    private String sourcePort;
     @StringParam(displayName = "TOS/Traffic Class", param = "-t", description = "Set the TOS (IPv4 type of service) or TC (IPv6 traffic class) value for outgoing packets", group = TraceroutePayload.GROUP_ADVANCED)
     private String tosClass;
     @StringParam(displayName = "Flow Label (IPv6)", param = "-l", description = "Use specified flow_label for IPv6 packets", group = TraceroutePayload.GROUP_ADVANCED)
     private String flowLabel;
-    @StringParam(displayName = "Wait Times", param = "-w", description = "Wait for a probe no more than HERE (default 3) times longer than a response from the same hop, or no more than NEAR (default 10) times than some next hop, or MAX (default 5.0) seconds (float point values allowed too)", group = TraceroutePayload.GROUP_ADVANCED)
-    private String waitTimes;
-    @StringParam(displayName = "Number of Queries", param = "-q", description = "Set the number of probes per each hop. Default is 3", group = TraceroutePayload.GROUP_ADVANCED)
-    private String numberOfQueries;
+    @NumberParam(displayName = "Number of Queries", param = "-q", min = 1., max = 65536., step = 1., description = "Set the number of probes per each hop. Default is 3", group = TraceroutePayload.GROUP_ADVANCED)
+    private Integer numberOfQueries;
     @BooleanParam(displayName = "Bypass Normal Routing", param = "-r", description = "Bypass the normal routing and send directly to a host on an attached network", group = TraceroutePayload.GROUP_ADVANCED)
     private String bypassNormal;
     @BooleanParam(displayName = "Show ICMP Extensions", param = "-e", description = "Show ICMP extensions (if present), including MPLS", group = TraceroutePayload.GROUP_ADVANCED)

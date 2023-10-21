@@ -29,10 +29,14 @@ public class DigPayload implements Payload {
     private Integer nonStandardPort;
     @StringParam(displayName = "Domain Name", param = "-q", description = "Specify the domain name to query", group = DigPayload.GROUP_GENERAL)
     private String domainName;
-    @BooleanParam(displayName = "Query Times in Microseconds", param = "-u", paramType = ParameterType.ONLY_PARAM, description = "Provide query times in microseconds", group = DigPayload.GROUP_GENERAL)
-    private boolean queryTimesInMicroseconds;
+    @NumberParam(displayName = "Query Times in Microseconds", min = 1., max = 600., step = 1., param = "-u", paramType = ParameterType.ONLY_PARAM, description = "Provide query times in microseconds", group = DigPayload.GROUP_GENERAL)
+    private Integer queryTimesInMicroseconds;
 
     // Additional Options
+    @FileParam(displayName = "Upload File", param = "-f", description = "Reads the list of hostnames from the specified file.", group = DigPayload.GROUP_ADDITIONAL)
+    private String file;
+    @FileParam(displayName = "Upload Key File", param = "-k", description = "Sign queries using TSIG using a key read from the given file.", group = DigPayload.GROUP_ADDITIONAL)
+    private String keyFile;
     @StringParam(displayName = "TSIG Authentication Key", param = "-y", description = "Sign queries using TSIG with the given authentication key (e.g.: hmac:keyname:secret)", group = DigPayload.GROUP_ADDITIONAL)
     private String tsigAuthenticationKey;
 
