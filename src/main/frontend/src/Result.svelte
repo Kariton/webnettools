@@ -124,8 +124,8 @@
     <div
         on:click={toggleVisibility}
         on:keypress={toggleVisibility}
-        role="button"
         tabindex="0"
+        role="button"
         class="card-header d-flex flex-row"
         class:bg-success={result.status === TaskStatus.SUCCESS}
         class:bg-danger={result.status === TaskStatus.ERROR}
@@ -168,9 +168,9 @@
             {:else}
                 <i
                     on:click|stopPropagation={cancelRequest}
-                    on:keypress|stopPropagation={cancelRequest}
-                    role="button"
+                    on:keypress={toggleVisibility}
                     tabindex="0"
+                    role="button"
                     class="bi bi-x"
                     style="font-size: 2.6em; line-height: 0em; margin-left: -0.2em; margin-buttom: -0.5em;"
                     class:d-none={result.status !== TaskStatus.RUNNING &&
@@ -215,8 +215,8 @@
             >
                 <pre
                     class="overflow-scroll-gradient"
-                    bind:this={textarea}>
-                {@html displayTextFormatted}
+                    bind:this={textarea}
+                    >{@html displayTextFormatted}
                 </pre>
             </div>
         </div>
