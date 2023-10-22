@@ -22,7 +22,7 @@
                 class="nav-link"
                 class:active={mode === tool.name}
                 on:click={() => changeMode(tool.name)}
-                on:keyup={() => changeMode(tool.name)}
+                on:keypress={() => changeMode(tool.name)}
                 >{tool.displayName}
             </a>
         </li>
