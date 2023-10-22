@@ -133,7 +133,7 @@ COPY --from=go-builder /root/nuclei/nuclei /usr/local/bin/
 
 # wcvs
 COPY --from=go-builder /root/Web-Cache-Vulnerability-Scanner/wcvs /usr/local/bin/
-COPY --from=go-builder /root/Web-Cache-Vulnerability-Scanner/wordlists/ /usr/local/bin/wordlists/
+COPY --from=go-builder /root/Web-Cache-Vulnerability-Scanner/wordlists/ /root/wordlists/
 
 # webnettools
 COPY --from=maven-builder /root/webnettools/target/*-runner.jar /app/app.jar
