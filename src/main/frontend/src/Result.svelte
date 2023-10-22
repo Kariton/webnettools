@@ -123,6 +123,9 @@
 <div class="card">
     <div
         on:click={toggleVisibility}
+        on:keypress={toggleVisibility}
+        role="button"
+        tabindex="0"
         class="card-header d-flex flex-row"
         class:bg-success={result.status === TaskStatus.SUCCESS}
         class:bg-danger={result.status === TaskStatus.ERROR}
@@ -148,7 +151,9 @@
             class="p-2 bd-highlight flex-grow-1 justify-content-end"
             style="margin-left: 1em; margin-top: 0em"
             on:mouseenter={() => (statusVisible = false)}
+            on:keyup={() => (statusVisible = false)}
             on:mouseleave={() => (statusVisible = true)}
+            on:keydown={() => (statusVisible = true)}
         >
             {#if statusVisible}
                 <div
@@ -163,6 +168,9 @@
             {:else}
                 <i
                     on:click|stopPropagation={cancelRequest}
+                    on:keypress|stopPropagation={cancelRequest}
+                    role="button"
+                    tabindex="0"
                     class="bi bi-x"
                     style="font-size: 2.6em; line-height: 0em; margin-left: -0.2em; margin-buttom: -0.5em;"
                     class:d-none={result.status !== TaskStatus.RUNNING &&

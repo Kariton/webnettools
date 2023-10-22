@@ -17,10 +17,14 @@
         <li class="nav-item" role="presentation">
             <!-- svelte-ignore a11y-missing-attribute -->
             <a
+                role="button"
+                tabindex="0"
                 class="nav-link"
                 class:active={mode === tool.name}
-                on:click={() => changeMode(tool.name)}>{tool.displayName}</a
-            >
+                on:click={() => changeMode(tool.name)}
+                on:keyup={() => changeMode(tool.name)}
+                >{tool.displayName}
+            </a>
         </li>
     {/each}
 </ul>

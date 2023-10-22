@@ -76,7 +76,7 @@
     }
 </script>
 
-<main role="main" class="container-fluid">
+<main class="container-fluid">
     <h1>
         <i class="bi bi-hdd-network" />
         Web Net Tools

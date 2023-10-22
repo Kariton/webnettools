@@ -173,10 +173,16 @@
         </form>
         {#each tool.groups as group}
             <div
+                role="button"
+                tabindex="0"
                 class="row text-secondary"
                 on:click={() => {
                     showOptions[group.name] = !showOptions[group.name];
                 }}
+                on:keypress={() => {
+                    showOptions[group.name] = !showOptions[group.name];
+                }}
+
                 style="font-size: 0.9em;"
             >
                 <i
