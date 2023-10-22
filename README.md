@@ -5,12 +5,16 @@
 
 Web Net Tools is a web frontend for some useful command line tooling. It provides especially an web frontend for tools like testssl.sh and nmap.
 Currently it support the following tools:
-* [testssl.sh](https://github.com/drwetter/testssl.sh)
-* Ping
-* Traceroute
-* [Nmap](https://nmap.org)
-* Dig
-* [MTR](https://www.bitwizard.nl/mtr/)
+* [TestSSL](https://github.com/drwetter/testssl.sh)
+* ping
+* traceroute
+* [nmap](https://nmap.org)
+* dig
+* [mtr](https://www.bitwizard.nl/mtr/)
+* [Speedtest](https://www.speedtest.net/apps/cli)
+* [RapidScan](https://github.com/skavngr/rapidscan)
+* [nuclei](https://github.com/projectdiscovery/nuclei)
+* [Web-Cache-Vulnerability-Scanner](https://github.com/Hackmanit/Web-Cache-Vulnerability-Scanner)
 
 <p align="center">
   <img align="center" style="display: inline" src="docs/testssl.png" alt="test ssl tooling" height="400" />
