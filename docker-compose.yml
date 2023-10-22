@@ -1,0 +1,13 @@
+---
+version: '3.8'
+
+services:
+  webnettools:
+    build:
+      context: .
+    cpus: 2.0
+    mem_limit: 1024M
+    mem_reservation: 512M
+    restart: unless-stopped
+    ports:
+      - 8080:8080,
